@@ -8,12 +8,20 @@ const AuthVerifyMiddleware = require("../middleware/AuthVerifyMiddleware");
 router.post("/registration",userController.registration);
 router.post("/login",userController.login)
 router.post("/profileUpdate",AuthVerifyMiddleware,userController.profileUpdate)
-   
+router.get("/profileDetails",AuthVerifyMiddleware,userController.profileDetails)
+router.get("/recoverVerifyEmail/:email",userController.recoverVerifyEmail)
+router.get("/recoverVerifyOTP/:email/:otp",userController.recoverVerifyOTP)
+
+router.post("/recoveryResetPassword",userController.RecoveryResetPassword)
 
 // TaskAction Routes 
 router.post("/createTask",AuthVerifyMiddleware,taskController.createTask)
-router.post("/deleteTask/:id",AuthVerifyMiddleware,taskController.deleteTasks)
-router.post("/updateTaskStatus/:id/:status",AuthVerifyMiddleware,taskController.updateTaskStatus)
+router.get("/deleteTask/:id",AuthVerifyMiddleware,taskController.deleteTasks)
+
+
+router.get("/updateTaskStatus/:id/:status",AuthVerifyMiddleware,taskController.updateTaskStatus)
+
+
 router.get("/listTaskByStatus/:status",AuthVerifyMiddleware,taskController.listTaskByStatus)
 router.get("/taskStatusCount",AuthVerifyMiddleware,taskController.taskStatusCount)
 

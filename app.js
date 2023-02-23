@@ -23,6 +23,8 @@ app.use(mongoSanitize());
 app.use(xss());
 app.use(hpp());
 app.use(cors())
+app.use(express.json({limit:'50mb'}));
+app.use(express.urlencoded({limit:'50mb'}))
 app.use(express.static(path.join(__dirname, "uploads")));
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -52,37 +54,37 @@ mongoose.connect(MONGO_URL, options, (err) => {
 });
 
 //Handling CORS
-// app.use((req, res, next) => {
-//   const devUrls = [
-//     'http://localhost:5000',
-//     'http://bholabarassociation.com'
-//   ]
-//   const prodUrls = [
-//     'http://localhost:5000',
-//     'http://bholabarassociation.com',
-//     'http://bholabarassociation.com:3000',
-//     'http://66.29.130.89',
-//     'http://66.29.130.89:3000'
-//   ]
-//   const allowedOrigins =
-//     process.env.NODE_ENV === 'DEV' ? devUrls
-//       : process.env.NODE_ENV === 'PROD' ? prodUrls
-//         : []
+app.use((req, res, next) => {
+  const devUrls = [
+    'http://localhost:5000',
+    'http://bholabarassociation.com'
+  ]
+  const prodUrls = [
+    'http://localhost:5000',
+    'http://bholabarassociation.com',
+    'http://bholabarassociation.com:3000',
+    'http://66.29.130.89',
+    'http://66.29.130.89:3000'
+  ]
+  const allowedOrigins =
+    process.env.NODE_ENV === 'DEV' ? devUrls
+      : process.env.NODE_ENV === 'PROD' ? prodUrls
+        : []
   
-//   const origin = req.headers.origin || "";
-//   if (allowedOrigins.includes(origin)) {
-//     res.setHeader("Access-Control-Allow-Origin", origin);
-//   }
-//   res.header("Access-Control-Allow-Methods", "GET, PUT, DELETE, OPTIONS");
-//   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-//   res.header("Access-Control-Allow-Credentials", "true");
+  const origin = req.headers.origin || "";
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  }
+  res.header("Access-Control-Allow-Methods", "GET, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.header("Access-Control-Allow-Credentials", "true");
 
-//   if (req.method === "OPTIONS") {
-//     return res.status(200).end();
-//   }
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
 
-//   return next();
-// });
+  return next();
+});
 
 
 

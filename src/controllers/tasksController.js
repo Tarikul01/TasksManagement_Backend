@@ -33,7 +33,7 @@ exports.updateTaskStatus=(req,res)=>{
     let status=req.params.status;
     let Query={_id:id};
     let reqBody={status:status};
-    console.log(id,status)
+    console.log("update")
     TasksModel.updateOne(Query,reqBody,(err,data)=>{
         if(err){
             res.status(400).json({status:'fail',data:err})
