@@ -49,8 +49,8 @@ const transporter = nodemailer.createTransport({
   // service: "Outlook",
   // secure: false,             // Set to true if using port 465, false otherwise
   auth: {
-    user: "noreply@gizantech.com",  // SMTP username
-    pass: "YAZQrfIHYysp6Mo",             // SMTP password
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,           // SMTP password
   },
   tls: {
     ciphers: "SSLv3", // Adjust TLS options if needed
