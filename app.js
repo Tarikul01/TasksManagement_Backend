@@ -12,6 +12,7 @@ const xss = require("xss-clean");
 const hpp = require("hpp");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const nodemailer = require('nodemailer');
 
 global.__basedir=__dirname;
 
@@ -38,20 +39,41 @@ const limiter = rateLimit({
   max: 100,
 });
 app.use(limiter);
+// Configure the transporter
+const transporter = nodemailer.createTransport({
+  host: "smtp.office365.com", // SMTP host
+  port: 587,                 // SMTP port
+  secure: false,             // Set to true if using port 465, false otherwise
+  auth: {
+    user: "noreply@gizantech.com",  // SMTP username
+    pass: "YAZQrfIHYysp6Mo",             // SMTP password
+  },
+});
 
+// Verify the transporter
+transporter.verify((error, success) => {
+  if (error) {
+    console.error("Error configuring transporter:", error);
+  } else {
+    console.log("Email transporter configured successfully");
+  }
+});
+// Make transporter globally accessible
+app.set("mailer", transporter);
 // Database connections
 const options = { user: "", pass: "", autoIndex: true };
 const MONGO_URL = process.env.MONGO_URL||"mongodb://0.0.0.0:27017/task_management";
 mongoose.connect(MONGO_URL, options, (err) => {
   if (!err) {
     console.log("DB connection success");
-
-    console.log("Server Running at port ", MONGO_URL);
     console.log("--------------------------------------------------\n\n\n");
   } else {
-    console.log("Db connection fails!");
+    console.log("Db connection fails!",err);
   }
 });
+
+
+
 
 //Handling CORS
 app.use((req, res, next) => {

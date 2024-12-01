@@ -3,6 +3,7 @@ const router = express.Router();
 const userController=require("../controllers/usersController");
 const taskController=require("../controllers/tasksController")
 const AuthVerifyMiddleware = require("../middleware/AuthVerifyMiddleware");
+const { createContact } = require("../controllers/contact");
 
 // User Actions Routes 
 router.post("/registration",userController.registration);
@@ -24,6 +25,8 @@ router.get("/updateTaskStatus/:id/:status",AuthVerifyMiddleware,taskController.u
 
 router.get("/listTaskByStatus/:status",AuthVerifyMiddleware,taskController.listTaskByStatus)
 router.get("/taskStatusCount",AuthVerifyMiddleware,taskController.taskStatusCount)
+
+router.post("/contact",createContact)
 
 
 
