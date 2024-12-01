@@ -41,13 +41,18 @@ const limiter = rateLimit({
 app.use(limiter);
 // Configure the transporter
 const transporter = nodemailer.createTransport({
-  // host: "smtp.office365.com", // SMTP host
-  // port: 587,                 // SMTP port
-  service: "Outlook",
+  host: "smtp.office365.com",
+  port: 587,
+  secure: false,            // SMTP port
+  // service: "Outlook",
   // secure: false,             // Set to true if using port 465, false otherwise
   auth: {
     user: "noreply@gizantech.com",  // SMTP username
     pass: "YAZQrfIHYysp6Mo",             // SMTP password
+  },
+  tls: {
+    ciphers: "SSLv3", // Adjust TLS options if needed
+    rejectUnauthorized: false, // Allow connections from untrusted certificates (debug)
   },
 });
 
