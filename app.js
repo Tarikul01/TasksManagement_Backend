@@ -41,6 +41,8 @@ const limiter = rateLimit({
 app.use(limiter);
 // Configure the transporter
 const transporter = nodemailer.createTransport({
+  service: 'Outlook',
+  type: "SMTP",
   host: "smtp.office365.com",
   port: 587,
   secure: false,            // SMTP port
