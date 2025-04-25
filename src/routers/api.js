@@ -6,6 +6,10 @@ const AuthVerifyMiddleware = require("../middleware/AuthVerifyMiddleware");
 const { createContact } = require("../controllers/contact");
 
 // User Actions Routes 
+
+router.post('/water-level', taskController.setWaterLevel);  // ESP32 sends update
+router.get('/water-level', taskController.getWaterLevel);   // Browser gets current level
+
 router.post("/registration",userController.registration);
 router.post("/login",userController.login)
 router.post("/profileUpdate",AuthVerifyMiddleware,userController.profileUpdate)

@@ -1,4 +1,35 @@
 const TasksModel=require("../models/TasksModel");
+const IotModel=require("../models/IotModel")
+
+
+// Store or update current water level
+exports.setWaterLevel = async (req, res) => {
+    try {
+      const { waterLevel } = req.body;
+  
+      const updatedData = await IotModel.findOneAndUpdate(
+        {}, // match the single existing doc
+        { waterLevel, updatedDate: new Date() },
+        { upsert: true, new: true } // create if not exists
+      );
+  
+      res.status(200).json({ message: "Water level updated", data: updatedData });
+    } catch (err) {
+      res.status(500).json({ message: "Error updating data", error: err.message });
+    }
+  };
+  
+  // Get current water level
+  exports.getWaterLevel = async (req, res) => {
+    try {
+      const data = await IotModel.findOne();
+      res.status(200).json({ data });
+    } catch (err) {
+      res.status(500).json({ message: "Error fetching data", error: err.message });
+    }
+  };
+
+
 
 exports.createTask=(req,res)=>{
     let reqBody=req.body;

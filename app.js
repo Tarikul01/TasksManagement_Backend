@@ -40,34 +40,31 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 // Configure the transporter
+console.log("Env test",process.env.SMTP_USER,process.env.SMTP_PASS)
 const transporter = nodemailer.createTransport({
-  service: 'Outlook',
-  type: "SMTP",
-  host: "smtp.office365.com",
-  port: 587,
-  secure: false,            // SMTP port
-  // service: "Outlook",
+  // service: 'Outlook',
+  // type: "SMTP",
+  // host: "smtp.office365.com",
+  // port: 587,
+  // secure: false,            // SMTP port
+  service: "gmail",
   // secure: false,             // Set to true if using port 465, false otherwise
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS,           // SMTP password
   },
-  tls: {
-    ciphers: "SSLv3", // Adjust TLS options if needed
-    rejectUnauthorized: false, // Allow connections from untrusted certificates (debug)
-  },
+
 });
 
 // Verify the transporter
-transporter.verify((error, success) => {
-  if (error) {
-    console.error("Error configuring transporter:", error);
-  } else {
-    console.log("Email transporter configured successfully");
-  }
-});
-// Make transporter globally accessible
-app.set("mailer", transporter);
+// transporter.verify((error, success) => {
+//   if (error) {
+//     console.error("Error configuring transporter:", error);
+//   } else {
+//     console.log("Email transporter configured successfully");
+//   }
+// });
+// app.set("mailer", transporter);
 // Database connections
 const options = { user: "", pass: "", autoIndex: true };
 const MONGO_URL = process.env.MONGO_URL||"mongodb://0.0.0.0:27017/task_management";
