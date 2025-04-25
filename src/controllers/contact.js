@@ -24,9 +24,7 @@ exports.createContact = async (req, res) => {
     // // Send an email to a predefined recipient
     if (contact) {
       const { send_message_time } = contact;
-    //   const to = "iotlabtech24@gmail.com";
-      
-      const to = "tarin.cse5.bu@gmail.com";
+      const to = "iotlabtech24@gmail.com";
       const date = new Date(send_message_time);
       const formattedDateTime = date.toLocaleString('en-US', {
         month: 'short',

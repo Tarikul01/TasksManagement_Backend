@@ -38,6 +38,7 @@ const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
 });
+
 app.use(limiter);
 // Configure the transporter
 console.log("Env test",process.env.SMTP_USER,process.env.SMTP_PASS)
